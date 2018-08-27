@@ -5,7 +5,7 @@ WHITE_PIECES = {
     'WP3': [6, 2],
     'WP4': [6, 3],
     'WP5': [6, 4],
-    'WP6': [6, 5],
+    'WP6': [5, 1], #[6, 5],
     'WP7': [6, 6],
     'WP8': [6, 7],
     'WR1': [7, 0],
@@ -90,7 +90,7 @@ class Chessboard:
 
     def _is_piece_taken(self, label):
         piece_position = self.pieces_position[label]
-        return not (piece_position[0] in range(0, 7) and piece_position[1] in range(0, 7))
+        return not (piece_position[0] in range(8) and piece_position[1] in range(8))
 
     def _is_position_valid(self, position):
         return position[0] in "ABCDEFGH" and position[1] in "12345678"
@@ -104,7 +104,29 @@ class Chessboard:
     def _get_piece_position(self, label):
         return self.pieces_position[label]
 
+    def _legal_move(self, label, start, target):
+        piece_type = label[1]
+        piece_team = label[0]
+        print("Start")
+        print(start)
+        print("Target")
+        print(target)
+        if piece_type == "P":
+            if target[0] == start[0]-1 and target[1] == start[1]:
+                return True
+            elif target[0] == start[0]-1 and target[1] == start[1]+1 and self.board[target[0]][target[1]] != "" and self.board[target[0]][target[1]][0] != piece_team:
+                return True
+            else:
+                return False
+        else:
+            return True
+
     def _move(self, label, start, target):
+        self.board[start[0]][start[1]] = ""
+        self.board[target[0]][target[1]] = label
+        self.pieces_position = target
+
+    def _is_capture(self, label, target):
         pass
 
     def attempt_move(self, piece_label, target_position_encoded):
@@ -120,16 +142,14 @@ class Chessboard:
         target_position = self._decode_position(target_position_encoded)
         starting_position = self._get_piece_position(piece_label)
 
-        # piece = create correct piece
+        if target_position == starting_position:
+            raise Exception("Starting position and target position are the same")
 
-        # if(invalid move for piece):
-        #     error
+        if(not self._legal_move(piece_label, starting_position, target_position)):
+            raise Exception("Invalid move for piece")
 
-        # if(move cross another piece):
-        #     error
-
-        # if(another piece taken)
-        #     mark the other piece as taken
+        if(self._is_capture(piece_label, target_position)):
+            self._take_piece(target_position)
 
         self._move(piece_label, starting_position, target_position)
 

@@ -36,7 +36,7 @@ def welcome():
 
 @app.route("/move", methods=['GET'])
 def move():
-    cb.attempt_move('BP1', 'A6')
+    cb.attempt_move('WP1', 'B3')
     return "Move a Piece on the Chessboard"
 
 @app.route("/status", methods=['GET'])
