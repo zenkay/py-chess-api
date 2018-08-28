@@ -1,49 +1,66 @@
-from flask import Flask, render_template
+import json
+from chess.game import *
+from flask import Flask, render_template, jsonify, request
 app = Flask(__name__)
 
-from chess.chessboard import Chessboard
+g = Game()
 
-CHESS_ICONS = {
-    "BK": "&#9818;",
-    "BQ": "&#9819;",
-    "BR": "&#9820;",
-    "BB": "&#9821;",
-    "BN": "&#9822;",
-    "BP": "&#9823;",
-    "WK": "&#9812;",
-    "WQ": "&#9813;",
-    "WR": "&#9814;",
-    "WB": "&#9815;",
-    "WN": "&#9816;",
-    "WP": "&#9817;"
-}
+'''
+Main endpoints required for the assignment
+'''
 
-cb = Chessboard()
+
+@app.route("/move", methods=['GET'])
+def move():
+    piece = request.args.get('piece').upper()
+    target = request.args.get('target').upper()
+    try:
+        g.move(piece, target)
+        return jsonify({"moved": True})
+    except Exception as e:
+        return jsonify({"moved": False, "details": e.message})
+
+
+@app.route("/is-legal", methods=['GET'])
+def legal():
+    piece = request.args.get('piece').upper()
+    target = request.args.get('target').upper()
+    is_legal, details = g.is_legal(piece, target)
+    return jsonify({"is_legal": is_legal, "details": details})
+
+
+@app.route("/is-taken", methods=['GET'])
+def taken():
+    piece = request.args.get('piece').upper()
+    try:
+        return jsonify({"is_taken": g.is_taken(piece)})
+    except Exception as e:
+        return jsonify({"error": e.message})
+
+
+'''
+Additional endpoints to draw game status
+and restart game
+'''
+
+
+@app.route("/", methods=['GET'])
+def status():
+    chessboard = g.status()
+    return render_template('status.html', cb=chessboard, toggle=toggle_color)
+
+
+@app.route("/restart", methods=['GET'])
+def restart():
+    return jsonify({"success": True})
+
+
+'''
+Helper methods
+'''
+
 
 def toggle_color(i, j):
     if ((i * 8) + j + i) % 2 == 0:
         return "white"
     return "black"
-
-def resolve_piece(label):
-    if len(label) != 3:
-        return ""
-    return CHESS_ICONS[label[0:2]]
-
-@app.route("/", methods=['GET'])
-def welcome():
-    return render_template('welcome.html')
-
-@app.route("/move", methods=['GET'])
-def move():
-    cb.attempt_move('WP1', 'B3')
-    return "Move a Piece on the Chessboard"
-
-@app.route("/status", methods=['GET'])
-def status():
-    chessboard = cb.status()
-    return render_template('status.html', cb=chessboard, toggle=toggle_color, resolve=resolve_piece)
-
-@app.route("/restart", methods=['POST'])
-def restart():
-    return "Reset the chessboard and restart the game"

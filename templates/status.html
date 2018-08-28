@@ -36,7 +36,7 @@
 {% for i in range(8) %}
     {% for j in range(8) %}
         <div class="{{ toggle(i, j) }}">
-            {{ resolve(cb[i][j])|safe }}<br><small>{{ cb[i][j] }}</small>
+            {{ cb[i][j].icon|safe }}<br><small>{{ cb[i][j].label }}</small>
         </div>
     {% endfor %}
 {% endfor %}

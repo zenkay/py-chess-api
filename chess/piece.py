@@ -1,20 +1,37 @@
 class Piece:
-    rank = None # row
-    file = None # column
-    team = None
-    taken = None
 
-    def __init__(self, rank, file, team):
-        self.rank = rank
-        self.file = file
+    ICONS = {
+        "BK": "&#9818;",
+        "BQ": "&#9819;",
+        "BR": "&#9820;",
+        "BB": "&#9821;",
+        "BN": "&#9822;",
+        "BP": "&#9823;",
+        "WK": "&#9812;",
+        "WQ": "&#9813;",
+        "WR": "&#9814;",
+        "WB": "&#9815;",
+        "WN": "&#9816;",
+        "WP": "&#9817;"
+    }
+
+    def __init__(self, rank, file, team, label="", icon=""):
+        self.rank = rank  # row
+        self.file = file  # column
         self.team = team
         self.taken = False
+        self.label = label
+        self.icon = icon
 
-    def _available_moves(self):
-        pass
-    
-    def _can_move_to(self, destination):
-        pass
+    def is_legal_move(self, target, chessboard):
+        raise NotImplementedError()
 
-    def move(self, destination)
-        pass
+    def is_taken(self):
+        return self.taken
+
+    @classmethod
+    def icon(cls, label):
+        if label in cls.ICONS:
+            return cls.ICONS[label]
+        else:
+            return ""
