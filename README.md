@@ -22,6 +22,7 @@ Software is designed on 3 key classes: Game, Chessboard and Piece.
 The API expose 3 endpoint:
 
 POST `/move` to move a piece in a give position (if the move is legal). 
+
 Takes 2 arguments: 
 - `piece` the label of the piece to move
 - `target` the location where to move the piece (with standard notation)
@@ -31,6 +32,7 @@ curl -d "piece=WP1&target=A6" -X POST http://127.0.0.1:5000/move
 ```
 
 GET `/is-legal` to check if a move is legal or not
+
 Takes 2 arguments: 
 - `piece` the label of the piece to move
 - `target` the location where to move the piece (with standard notation)
@@ -40,6 +42,7 @@ curl -X GET http://127.0.0.1:5000/is-legal?piece=WP1&target=A6
 ```
 
 GET `/is-taken` to check if a piece is taken
+
 Takes 1 argument: 
 - `piece` the label of the piece to move
 
@@ -48,8 +51,8 @@ curl -X GET http://127.0.0.1:5000/is-taken?piece=BK1
 ```
 
 The API also offer more endpoint
-- `/restart` restart the game by resetting the chessboard and the places 
-- `/` draw the status of the chessboard with icons of pieces and their acronyms
+- POST `/restart` restart the game by resetting the chessboard and the places 
+- GET `/` draw the status of the chessboard with icons of pieces and their acronyms
 
 ![chessboard](https://user-images.githubusercontent.com/223858/44769240-45be9f80-ab64-11e8-93d3-96f516c7869b.png)
 
