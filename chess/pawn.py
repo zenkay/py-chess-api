@@ -49,6 +49,9 @@ class Pawn(Piece):
             and target[1] == self.file
 
     def _first_move(self, target, chessboard):
+        # Would require to add support for 
+        # piece status to detect first move
+        # postponed
         pass
 
     def is_legal_move(self, target, chessboard):
