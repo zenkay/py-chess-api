@@ -97,6 +97,9 @@ class Game:
         if(not self._is_position_valid(target_position_encoded)):
             return False, "Invalid position on chessboard"
 
+        if(not self._is_piece_valid(piece_label)):
+            return False, "Invalid piece"
+
         if(not self._can_team_move(piece_label)):
             return False, "Wrong round, wait for your team's round"
         

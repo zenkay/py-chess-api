@@ -6,14 +6,13 @@ app = Flask(__name__)
 g = Game()
 
 '''
-Main endpoints required for the assignment
+Main endpoints described in the assignment
 '''
 
 
 @app.route("/move", methods=['POST'])
 def move():
     try:
-        print(request.values) 
         piece = request.values.get('piece').upper()
         target = request.values.get('target').upper()       
         g.move(piece, target)
@@ -31,7 +30,6 @@ def legal():
         return jsonify({"is_legal": is_legal, "details": details})
     except Exception as e:
         return jsonify({"error": e.message})
-
 
 
 @app.route("/is-taken", methods=['GET'])
@@ -66,6 +64,4 @@ Helper methods
 
 
 def toggle_color(i, j):
-    if ((i * 8) + j + i) % 2 == 0:
-        return "white"
-    return "black"
+    return ("white" if ((i * 8) + j + i) % 2 == 0 else "black")

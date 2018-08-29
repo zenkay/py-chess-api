@@ -4,9 +4,6 @@ from piece import *
 class Pawn(Piece):
 
     def _1_step_ahead(self, target):
-        print("risultato")
-        print(target)
-        print([self.rank, self.file])
         if self.team == "W":
             return target[0] == self.rank-1\
             and target[1] == self.file
