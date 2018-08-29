@@ -20,15 +20,38 @@ Software is designed on 3 key classes: Game, Chessboard and Piece.
 - **Piece** knows its position, its team and its status. Each subclass (Paws, Rook, Knight, Bishop, King and Queen) has a custom implementation of the method that evaluate if a move is legal.
 
 The API expose 3 endpoint:
-- `/move` to move a piece in a give position (if the move is legal)
-- `/is-legal` to check if a move is legal or not
-- `/is-taken` to check if a piece is taken
 
-The APi also offer more endpoint
+POST `/move` to move a piece in a give position (if the move is legal). 
+Takes 2 arguments: 
+- `piece` the label of the piece to move
+- `target` the location where to move the piece (with standard notation)
+
+```
+curl -d "piece=WP1&target=A6" -X POST http://127.0.0.1:5000/move
+```
+
+GET `/is-legal` to check if a move is legal or not
+Takes 2 arguments: 
+- `piece` the label of the piece to move
+- `target` the location where to move the piece (with standard notation)
+
+```
+curl -X GET http://127.0.0.1:5000/is-legal?piece=WP1&target=A6
+```
+
+GET `/is-taken` to check if a piece is taken
+Takes 1 argument: 
+- `piece` the label of the piece to move
+
+```
+curl -X GET http://127.0.0.1:5000/is-take?piece=BK1
+```
+
+The API also offer more endpoint
 - `/` draw the status of the chessboard with icons of pieces and their acronyms
 - `/restart` restart the game by resetting the chessboard and the piaces 
 
-Pieces are described by an acronym:
+Pieces are described by a label:
 - W or B for the team
 - K, Q, B, N, R and P (N is for kNight) for the pieces
 - 1 to 8 to identify different pieces of the same type.

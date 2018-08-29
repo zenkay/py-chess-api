@@ -125,7 +125,7 @@ class Game:
             target_position = self._decode_position(target_position_encoded)
             starting_position = self._get_piece_position(piece_label)
 
-            if(self._is_capture(piece, target_position)):
+            if(self._is_capture(target_position)):
                 self._take_piece(target_position)
 
             self.board.leave_square(starting_position)

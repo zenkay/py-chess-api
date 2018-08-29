@@ -10,11 +10,12 @@ Main endpoints required for the assignment
 '''
 
 
-@app.route("/move", methods=['GET'])
+@app.route("/move", methods=['POST'])
 def move():
-    piece = request.args.get('piece').upper()
-    target = request.args.get('target').upper()
     try:
+        print(request.values) 
+        piece = request.values.get('piece').upper()
+        target = request.values.get('target').upper()       
         g.move(piece, target)
         return jsonify({"moved": True})
     except Exception as e:
@@ -23,10 +24,14 @@ def move():
 
 @app.route("/is-legal", methods=['GET'])
 def legal():
-    piece = request.args.get('piece').upper()
-    target = request.args.get('target').upper()
-    is_legal, details = g.is_legal(piece, target)
-    return jsonify({"is_legal": is_legal, "details": details})
+    try:
+        piece = request.args.get('piece')
+        target = request.args.get('target')
+        is_legal, details = g.is_legal(piece, target)
+        return jsonify({"is_legal": is_legal, "details": details})
+    except Exception as e:
+        return jsonify({"error": e.message})
+
 
 
 @app.route("/is-taken", methods=['GET'])
@@ -50,7 +55,7 @@ def status():
     return render_template('status.html', cb=chessboard, toggle=toggle_color)
 
 
-@app.route("/restart", methods=['GET'])
+@app.route("/restart", methods=['POST'])
 def restart():
     return jsonify({"success": True})
 

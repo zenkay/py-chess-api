@@ -33,7 +33,7 @@ class Piece:
         self.taken = True
         self.update_position(-1, -1)
 
-    def update_position(rank, file):
+    def update_position(self, rank, file):
         self.rank = rank
         self.file = file
 
