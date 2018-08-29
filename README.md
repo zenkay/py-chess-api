@@ -25,9 +25,8 @@ The API expose 3 endpoint:
 
 #### POST `/move` 
 
-moves a piece in a give position (if the move is legal). 
+Moves a piece in a give position (if the move is legal). Takes 2 arguments: 
 
-Takes 2 arguments: 
 - `piece` the label of the piece to move
 - `target` the location where to move the piece (with standard notation)
 
@@ -39,9 +38,8 @@ Illegal moves aren't executed and an error message is returned containing detail
 
 #### GET `/is-legal`
 
-checks if a move is legal or not
+Checks if a move is legal or not. Takes 2 arguments: 
 
-Takes 2 arguments: 
 - `piece` the label of the piece to move
 - `target` the location where to move the piece (with standard notation)
 
@@ -52,9 +50,9 @@ curl -X GET http://127.0.0.1:5000/is-legal?piece=WP1&target=A6
 ```
 
 #### GET `/is-taken`
-checks if a piece is taken
 
-Takes 1 argument: 
+Checks if a piece is taken. Takes 1 argument: 
+
 - `piece` the label of the piece to move
 
 ```
@@ -63,11 +61,11 @@ curl -X GET http://127.0.0.1:5000/is-taken?piece=BK1
 
 #### POST `/restart`
 
-restart the game by resetting the chessboard and the places 
+Restart the game by resetting the chessboard and the places 
 
 #### GET `/`
 
-draw the status of the chessboard with icons of pieces and their acronyms
+Draw the status of the chessboard with icons of pieces and their acronyms
 
 ![chessboard](https://user-images.githubusercontent.com/223858/44769240-45be9f80-ab64-11e8-93d3-96f516c7869b.png)
 
