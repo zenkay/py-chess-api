@@ -41,12 +41,17 @@ class Chessboard():
         self._create_board()
         self._arrange_pieces(white_pieces, black_pieces)
 
-    def leave_square(self, starting):
-        self.board[starting[0]][starting[1]] = ""
+    def leave_square(self, position):
+        self.board[position[0]][position[1]] = ""
 
     def fill_square(self, target, piece):
-        print(piece.label)
         self.board[target[0]][target[1]] = piece
+
+    def get_from_square(self, target):
+        content = self.board[target[0]][target[1]]
+        if content != "":
+            return content
+        return None
 
     def status(self):
         return self.board

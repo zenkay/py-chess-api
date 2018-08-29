@@ -84,8 +84,14 @@ class Game:
         else:
             self.next_moving_team = self.WHITE_TEAM
 
-    def _is_capture(self, label, target):
-        pass
+    def _is_capture(self, target):
+        piece = self.board.get_from_square(target)
+        return (True if(piece) else False)
+
+    def _take_piece(self, target):
+        piece = self.board.get_from_square(target)
+        piece.set_as_taken()
+        self.board.leave_square(target)
 
     def is_legal(self, piece_label, target_position_encoded):
         if(not self._is_position_valid(target_position_encoded)):
@@ -124,6 +130,7 @@ class Game:
 
             self.board.leave_square(starting_position)
             self.board.fill_square(target_position, piece)
+            piece.update_position(target_position[0], target_position[1])
 
             self._switch_round()
         else:

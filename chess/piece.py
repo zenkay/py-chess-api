@@ -28,6 +28,14 @@ class Piece:
 
     def is_taken(self):
         return self.taken
+    
+    def set_as_taken(self):
+        self.taken = True
+        self.update_position(-1, -1)
+
+    def update_position(rank, file):
+        self.rank = rank
+        self.file = file
 
     @classmethod
     def icon(cls, label):

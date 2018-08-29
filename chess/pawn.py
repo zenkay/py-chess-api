@@ -3,16 +3,56 @@ from piece import *
 
 class Pawn(Piece):
 
+    def _1_step_ahead(target):
+        if self.team == "W":
+            return target[0] == self.rank-1\
+            and target[1] == self.file
+        elif self.team == "B":
+            return target[0] == self.rank+1\
+            and target[1] == self.file
+
+    def _capture_right(target, chessboard):
+        if self.team == "W":
+            return target[0] == self.rank-1\
+            and target[1] == self.file+1\
+            and chessboard[target[0]][target[1]] != ""\
+            and chessboard[target[0]][target[1]][0] != self.team
+        elif self.team == "B":
+            return target[0] == self.rank-1\
+            and target[1] == self.file-1\
+            and chessboard[target[0]][target[1]] != ""\
+            and chessboard[target[0]][target[1]][0] != self.team
+
+    def _capture_left(target, chessboard):
+        if self.team == "W":
+            return target[0] == self.rank+1\
+            and target[1] == self.file+1\
+            and chessboard[target[0]][target[1]] != ""\
+            and chessboard[target[0]][target[1]].team != self.team
+        elif self.team == "B":
+            return target[0] == self.rank+1\
+            and target[1] == self.file-1\
+            and chessboard[target[0]][target[1]] != ""\
+            and chessboard[target[0]][target[1]].team != self.team
+
+    def _an_passant(self, target, chessboard):
+        if self.team == "W":
+            return target[0] == self.rank-2\
+            and target[1] == self.file\
+            and chessboard[self.rank-1][self.file] != ""\
+            and chessboard[self.rank-1][self.file].team != self.team
+        elif self.team == "B":
+            return target[0] == self.rank+1\
+            and target[1] == self.file
+
+    def _first_move(self, target, chessboard):
+        pass
+
     def is_legal_move(self, target, chessboard):
-        # move
-        if target[0] == start[0]-1 and target[1] == start[1]:
+        if self._1_step_ahead(target)\
+        or self._capture_right(target, chessboard)\
+        or self._capture_left(target, chessboard)\
+        or self._an_passant(target, chessboard)\
+        or self._an_passant(target, chessboard):
             return True
-        # capture right
-        elif target[0] == start[0]-1 and target[1] == start[1]+1 and chessboard[target[0]][target[1]] != "" and chessboard[target[0]][target[1]][0] != piece_team:
-            return True
-        # capture left
-        elif target[0] == start[0]-1 and target[1] == start[1]-1 and chessboard[target[0]][target[1]] != "" and chessboard[target[0]][target[1]][0] != piece_team:
-            return True
-        # no other moves
-        else:
-            return False
+        return False
