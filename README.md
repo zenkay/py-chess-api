@@ -44,12 +44,14 @@ Takes 1 argument:
 - `piece` the label of the piece to move
 
 ```
-curl -X GET http://127.0.0.1:5000/is-take?piece=BK1
+curl -X GET http://127.0.0.1:5000/is-taken?piece=BK1
 ```
 
 The API also offer more endpoint
+- `/restart` restart the game by resetting the chessboard and the places 
 - `/` draw the status of the chessboard with icons of pieces and their acronyms
-- `/restart` restart the game by resetting the chessboard and the piaces 
+
+![chessboard](https://user-images.githubusercontent.com/223858/44769240-45be9f80-ab64-11e8-93d3-96f516c7869b.png)
 
 Pieces are described by a label:
 - W or B for the team
