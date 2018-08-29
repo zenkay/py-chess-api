@@ -3,7 +3,10 @@ from piece import *
 
 class Pawn(Piece):
 
-    def _1_step_ahead(target):
+    def _1_step_ahead(self, target):
+        print("risultato")
+        print(target)
+        print([self.rank, self.file])
         if self.team == "W":
             return target[0] == self.rank-1\
             and target[1] == self.file
@@ -11,19 +14,19 @@ class Pawn(Piece):
             return target[0] == self.rank+1\
             and target[1] == self.file
 
-    def _capture_right(target, chessboard):
+    def _capture_right(self, target, chessboard):
         if self.team == "W":
             return target[0] == self.rank-1\
             and target[1] == self.file+1\
             and chessboard[target[0]][target[1]] != ""\
-            and chessboard[target[0]][target[1]][0] != self.team
+            and chessboard[target[0]][target[1]].team != self.team
         elif self.team == "B":
             return target[0] == self.rank-1\
             and target[1] == self.file-1\
             and chessboard[target[0]][target[1]] != ""\
-            and chessboard[target[0]][target[1]][0] != self.team
+            and chessboard[target[0]][target[1]].team != self.team
 
-    def _capture_left(target, chessboard):
+    def _capture_left(self, target, chessboard):
         if self.team == "W":
             return target[0] == self.rank+1\
             and target[1] == self.file+1\

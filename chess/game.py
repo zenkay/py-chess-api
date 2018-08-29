@@ -111,7 +111,7 @@ class Game:
         if(piece.is_taken()):
             return False, "Can't move a taken piece"
 
-        if(not piece.is_legal_move(target_position, self.board)):
+        if(not piece.is_legal_move(target_position, self.board.status())):
             return False, "Invalid move for piece"
 
         return True, "Valid move"
