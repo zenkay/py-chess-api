@@ -19,9 +19,11 @@ Software is designed on 3 key classes: Game, Chessboard and Piece.
 - **Chessboard** handle the status of the chessboard. Place all the piaces on their initial position and expose methods to move them around.
 - **Piece** knows its position, its team and its status. Each subclass (Paws, Rook, Knight, Bishop, King and Queen) has a custom implementation of the method that evaluate if a move is legal.
 
+### Endpoints 
+
 The API expose 3 endpoint:
 
-POST `/move` to move a piece in a give position (if the move is legal). 
+**POST** `/move` to move a piece in a give position (if the move is legal). 
 
 Takes 2 arguments: 
 - `piece` the label of the piece to move
@@ -31,17 +33,21 @@ Takes 2 arguments:
 curl -d "piece=WP1&target=A6" -X POST http://127.0.0.1:5000/move
 ```
 
-GET `/is-legal` to check if a move is legal or not
+Illegal moves aren't executed and an error message is returned containing details about why the move is illegal.
+
+**GET** `/is-legal` to check if a move is legal or not
 
 Takes 2 arguments: 
 - `piece` the label of the piece to move
 - `target` the location where to move the piece (with standard notation)
 
+If the move is not legal, details about why the move is illegal are returned from the API.
+
 ```
 curl -X GET http://127.0.0.1:5000/is-legal?piece=WP1&target=A6
 ```
 
-GET `/is-taken` to check if a piece is taken
+**GET** `/is-taken` to check if a piece is taken
 
 Takes 1 argument: 
 - `piece` the label of the piece to move
